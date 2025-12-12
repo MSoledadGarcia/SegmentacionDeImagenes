@@ -1,3 +1,6 @@
+
+![Banner](img/banner_repo.png)
+
 # 🖼️ Segmentación de Imágenes con K-means en R
 
 Este proyecto aplica técnicas de procesamiento digital de imágenes y segmentación mediante K-means utilizando R. A partir de una imagen RGB, se realiza la conversión a escala de grises, la extracción de los canales de color, el agrupamiento por colores y la reconstrucción de versiones segmentadas de la imagen con distintos valores de k.
