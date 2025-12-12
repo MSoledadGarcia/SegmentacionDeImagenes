@@ -1,79 +1,81 @@
-# SegmentacionDeImagenes
-Segmentación de imágenes con aprendizaje no supervisado. 
+# 🖼️ Segmentación de Imágenes con K-means en R
 
-## Segmentación de una imagen 
+Este proyecto aplica técnicas de procesamiento digital de imágenes y segmentación mediante K-means utilizando R. A partir de una imagen RGB, se realiza la conversión a escala de grises, la extracción de los canales de color, el agrupamiento por colores y la reconstrucción de versiones segmentadas de la imagen con distintos valores de k.
 
-Se eligió una imagen en formato .jpg de la web.
-Imagen obtenida de https://www.elblogdelatabla.com/dykes-genero-iris-ilustraciones-the-iris-genus/  .
+El código completo se encuentra en el archivo:
+📄 segmentacion.R
 
+## 📌 1. Carga y visualización de la imagen
 
-<img width="715" height="473" alt="image" src="https://github.com/user-attachments/assets/3164eb8c-c8be-4768-9126-5e6f99656705" />
+Se carga una imagen en formato JPG y se visualiza su versión original.
 
+Imagen 1 — Imagen original
 
+![Imagen original](img/Iris4.jpg)
 
+Imagen original tomada de: [El Blog de la Tabla – Iris Genus](https://www.elblogdelatabla.com/dykes-genero-iris-ilustraciones-the-iris-genus/)
 
-Se eligió esta imagen de ilustración botánica de Iris, este tipo de flor tan estudiado en ciencia de datos. 
+También se muestran sus dimensiones (alto, ancho y canales RGB).
 
-Se trabajó con lenguaje R en RStudio. 
-Se utilizó la librería “jpeg” para analizar la estructura de la imagen. 
+ ## 📌 2. Conversión a escala de grises
 
+Se genera una versión en grises promediando los canales rojo, verde y azul. Esto permite trabajar con una representación más simple de la intensidad luminosa.
 
-- Imagen transformada a tono de grises promediando el color de sus pixeles.
+Imagen 2 — Imagen en escala de grises
 
-<img width="713" height="478" alt="image" src="https://github.com/user-attachments/assets/cd3e284e-9f0d-46a4-8465-ce71c4b2f18f" />
+![Grises](img/EscalaGrises.jpeg)
 
+## 📌 3. Extracción de canales y preparación de datos
 
+Los canales R, G y B se convierten en vectores y se combinan en un data frame que representa cada píxel como un punto en el espacio RGB.
+Este dataset se usa como entrada para el algoritmo K-means.
 
-- Se convirtió la matríz de la imagen en un dataframe de tres columnas (RGB) y se realizó un modelo de aprendizaje no supervisado con el algoritmo K-means para separar los colores en 3 grupos.
+## 📌 4. Segmentación con K = 3
 
-Cada centroide es el color promedio entre los colores de cada grupo. 
+Se aplica K-means con 3 clústeres, lo que permite obtener una primera versión simplificada de la imagen, basada en tres colores representativos (los centroides).
 
-Centroides obtenidos con kmeans:
-
-<img width="560" height="98" alt="image" src="https://github.com/user-attachments/assets/9ce2a1ca-37f6-457e-82ca-c0d3521ecd4d" />
-
-
-
-Gráfico con los colores obtenidos con cada centroide:
-
-
-<img width="398" height="370" alt="image" src="https://github.com/user-attachments/assets/b3efa1aa-b48e-4cc1-b1f7-688ba356d930" />
+🎨 Visualización de los centroides (3 colores)
 
 
-Imagen segmentada coloreada con los 3 centroides. 
+![Centroides 3 grupos](img/3centroides.jpeg)
 
-<img width="715" height="476" alt="image" src="https://github.com/user-attachments/assets/bb0d82bf-2cdb-402f-a151-ca33fa825ecd" />
-
-Imagen segmentada con kmeans  en 7 grupos coloreada por los siete centroides obtenidos. 
-
-<img width="723" height="480" alt="image" src="https://github.com/user-attachments/assets/58f63494-81a1-472e-8cab-0bcdbf93dfb5" />
+**🖼️ Imagen segmentada con 3 grupos** 
 
 
+![Segmentada 3 grupos](img/k3.jpeg)
 
--Imagen original y las 2 segmentadas en 3 y 7 grupos
+## 📌 5. Segmentación con K = 7
 
-
-<img width="458" height="904" alt="image" src="https://github.com/user-attachments/assets/84f0a932-d10c-4fe5-ac81-b8ba90b2cf25" />
+Se repite el proceso con 7 clústeres, generando una segmentación con mayor nivel de detalle cromático.
 
 
 
-Podemos ver que las imágenes que se obtuvieron con la segmentación son similares a la original pero al tener menor cantidad de colores también tienen menor definición y se pierden detalles como por ejemplo las letras. 
-
-Segmentación con 14 grupos, se puede observar mejor detalle que las anteriores. 
-
-<img width="680" height="458" alt="image" src="https://github.com/user-attachments/assets/afdf1649-9921-48c3-a050-224e02d082e7" />
-
-<img width="548" height="513" alt="image" src="https://github.com/user-attachments/assets/0f41d8f3-7547-4549-8102-9f609bd6f93b" />
-
-Convierto 2 grupos pertenecientes al fondo en color blanco:
-
-<img width="675" height="453" alt="image" src="https://github.com/user-attachments/assets/e153da62-eb14-4cb1-a5ee-37d7aab7d12f" />
+**🖼️ Imagen segmentada con 7 grupos**
 
 
-1)	¿Para qué podría servir segmentar imágenes? 
-“La segmentación de imágenes sirve para separar una imagen en regiones u objetos relevantes. Permite identificar qué parte corresponde a cada elemento y así facilitar tareas como medición, detección o reconocimiento. Es fundamental en áreas como medicina, robótica, seguridad y edición de imágenes.”  (ChatGPT)
+![Segmentada 7 grupos](img/k7.jpeg)
 
-Kmeans podría servir en la segmentación de imágenes para detectar objetos o intensidades y así poder cambiar colores, modificar fondos, resaltar objetos de interés lo cuál tiene infinitas aplicaciones en diferentes campos de estudio. 
+## 📌 6. Segmentación con K = 14 (Mayor nivel de detalle)
 
+Se aumenta la complejidad a 14 grupos, lo que permite capturar diferencias de color mucho más finas en la imagen.
+
+🎨 Centroides de K = 14
+
+
+![Centroides 14 grupos](img/14centroides.jpeg)
+
+**🖼️ Imagen segmentada con 14 grupos**
+
+
+![Segmentada 14 grupos](img/k14.jpeg)
+
+📌 7. Eliminación del fondo gris mediante los clústeres
+
+Utilizando los grupos identificados por K-means, se detectan aquellos que representan el fondo gris y se reemplazan por blanco para resaltarlo.
+
+**🖼️ Imagen con fondo eliminado**
+
+
+![Fondo eliminado](img/k14sinfondo.jpeg)
 
 
